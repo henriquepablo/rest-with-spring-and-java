@@ -82,6 +82,18 @@ public class MathController {
 		return (convertToDouble(numberOne) + convertToDouble(numberTwo)) / 2;
 	}
 	
+	@RequestMapping(value = "/square/{numberOne}", method=RequestMethod.GET)
+	public Double squareRoot(
+			@PathVariable(value="numberOne") String numberOne
+			) throws Exception{
+		
+		if (!isNumeric(numberOne)) {
+			throw new UnsuppotedMathOperationException("Please set a numeric value");
+		}
+		
+		return Math.sqrt(convertToDouble(numberOne));
+	}
+	
 	private Double convertToDouble(String strNumber) {
 		if (strNumber == null) {
 			return 0D;
