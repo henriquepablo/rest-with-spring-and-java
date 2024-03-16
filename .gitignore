@@ -1,0 +1,32 @@
+/.metadata/
+
+.class
+
+/node_modules
+
+# SSH keys
+
+*.pem
+*.ppk
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+#Gradle temporary files
+
+#Eclipse files
+**/.project
+**/.classpath
+**/.settings/
+bin/
+blog/bin/
+**/.tern-project
+
+# virtual machine logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+/.metadata/
