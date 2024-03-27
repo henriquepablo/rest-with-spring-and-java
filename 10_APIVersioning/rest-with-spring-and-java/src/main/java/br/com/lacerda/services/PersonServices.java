@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.lacerda.data.vo.v1.PersonVO;
+import br.com.lacerda.data.vo.v2.PersonVOV2;
 import br.com.lacerda.exceptions.ResourceNotFoundException;
 import br.com.lacerda.mapper.DozerMapper;
 import br.com.lacerda.model.Person;
@@ -28,16 +29,27 @@ public class PersonServices {
 		return DozerMapper.parseListObjects(repository.findAll(), PersonVO.class);
 	}
 
-	public PersonVO findById(Long id) {
+	public PersonVOV2 findById(Long id) {
 
 		logger.info("Finding one person");
 
 		Person entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records for this Id"));
 		
-		return DozerMapper.parseObject(entity, PersonVO.class);
+		return DozerMapper.parseObject(entity, PersonVOV2.class);
 	}
 
 	public PersonVO create(PersonVO person) {
+
+		logger.info("Create a person");
+		// converte de VO para entidade
+		Person entity = DozerMapper.parseObject(person, Person.class);
+		// cria a entidade no banco
+		repository.save(entity);
+		// converte de entidade para VO
+		return DozerMapper.parseObject(entity, PersonVO.class);
+	}
+	
+	public PersonVO createV2(PersonVOV2 person) {
 
 		logger.info("Create a person");
 		// converte de VO para entidade
