@@ -6,12 +6,15 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.dozermapper.core.Mapper;
+
 import br.com.lacerda.data.vo.v1.PersonVO;
 import br.com.lacerda.data.vo.v2.PersonVOV2;
 import br.com.lacerda.exceptions.ResourceNotFoundException;
 import br.com.lacerda.mapper.DozerMapper;
 import br.com.lacerda.model.Person;
 import br.com.lacerda.repositories.PersonRepository;
+import br.com.lacerda.mapper.custmo.PersonMapper;
 
 @Service
 public class PersonServices {
@@ -22,20 +25,32 @@ public class PersonServices {
 	@Autowired
 	PersonRepository repository;
 	
+	@Autowired
+	private PersonMapper mapper;
+	
 	public List<PersonVO> findAll() {
 
 		logger.info("Find all persons");
 
 		return DozerMapper.parseListObjects(repository.findAll(), PersonVO.class);
 	}
-
-	public PersonVOV2 findById(Long id) {
-
+	
+	public PersonVO findById(Long id) {
 		logger.info("Finding one person");
-
-		Person entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records for this Id"));
 		
-		return DozerMapper.parseObject(entity, PersonVOV2.class);
+		Person entity = repository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+		
+		return DozerMapper.parseObject(entity, PersonVO.class);
+	}
+
+	public PersonVOV2 createV2(PersonVOV2 person) {
+
+		logger.info("creating a person with v2");
+
+		Person entity = mapper.convertVoToEntity(person);
+		
+		return mapper.convertEntityToVo(repository.save(entity));
 	}
 
 	public PersonVO create(PersonVO person) {
@@ -49,7 +64,7 @@ public class PersonServices {
 		return DozerMapper.parseObject(entity, PersonVO.class);
 	}
 	
-	public PersonVO createV2(PersonVOV2 person) {
+	public PersonVO createVO(PersonVO person) {
 
 		logger.info("Create a person");
 		// converte de VO para entidade

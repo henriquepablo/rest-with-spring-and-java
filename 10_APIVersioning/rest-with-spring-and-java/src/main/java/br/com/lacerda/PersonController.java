@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.lacerda.data.vo.v1.PersonVO;
 import br.com.lacerda.data.vo.v2.PersonVOV2;
+import br.com.lacerda.mapper.custmo.PersonMapper;
 import br.com.lacerda.services.PersonServices;
 
 @RestController
@@ -37,14 +38,14 @@ public class PersonController {
 	}
 	
 	@PostMapping(value = "/v2", consumes = MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-	public PersonVO create(@RequestBody PersonVOV2 person) throws Exception{
+	public PersonVOV2 createV2(@RequestBody PersonVOV2 person) throws Exception{
 		
 		return service.createV2(person);
 	}
 	
 	
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-	public PersonVO createV2(@RequestBody PersonVO person) throws Exception{
+	public PersonVO create(@RequestBody PersonVO person) throws Exception{
 		
 		return service.create(person);
 	}
