@@ -27,7 +27,7 @@ public class Person implements Serializable{
 	private String lastName;
 	
 	@Column(nullable = false, length = 100)
-	private String addres;
+	private String address;
 	
 	@Column(nullable = false, length = 6)
 	private String gender;
@@ -60,12 +60,12 @@ public class Person implements Serializable{
 		this.lastName = lastName;
 	}
 
-	public String getAddres() {
-		return addres;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setAddres(String addres) {
-		this.addres = addres;
+	public void setAddres(String address) {
+		this.address = address;
 	}
 
 	public String getGender() {
@@ -78,7 +78,7 @@ public class Person implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(addres, firstName, gender, id, lastName);
+		return Objects.hash(address, firstName, gender, id, lastName);
 	}
 
 	@Override
@@ -90,7 +90,7 @@ public class Person implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Person other = (Person) obj;
-		return Objects.equals(addres, other.addres) && Objects.equals(firstName, other.firstName)
+		return Objects.equals(address, other.address) && Objects.equals(firstName, other.firstName)
 				&& Objects.equals(gender, other.gender) && Objects.equals(id, other.id)
 				&& Objects.equals(lastName, other.lastName);
 	}

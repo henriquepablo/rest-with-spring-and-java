@@ -12,7 +12,7 @@ public class PersonVO implements Serializable{
 	private Long id;
 	private String firstName;
 	private String lastName;
-	private String addres;
+	private String address;
 	private String gender;
 	
 	public PersonVO() {
@@ -43,12 +43,12 @@ public class PersonVO implements Serializable{
 		this.lastName = lastName;
 	}
 
-	public String getAddres() {
-		return addres;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setAddres(String addres) {
-		this.addres = addres;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public String getGender() {
@@ -61,7 +61,7 @@ public class PersonVO implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(addres, firstName, gender, id, lastName);
+		return Objects.hash(address, firstName, gender, id, lastName);
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class PersonVO implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		PersonVO other = (PersonVO) obj;
-		return Objects.equals(addres, other.addres) && Objects.equals(firstName, other.firstName)
+		return Objects.equals(address, other.address) && Objects.equals(firstName, other.firstName)
 				&& Objects.equals(gender, other.gender) && Objects.equals(id, other.id)
 				&& Objects.equals(lastName, other.lastName);
 	}
