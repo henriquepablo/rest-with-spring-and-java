@@ -3,7 +3,6 @@ package br.com.lacerda.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,24 +23,24 @@ public class PersonController {
 	@Autowired
 	private PersonServices service;
 	
-	@GetMapping(value="/{id}", produces= {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	@GetMapping(value="/{id}", produces= { "application/json", "application/xml", "application/x-yaml" })
 	public PersonVO findById(@PathVariable(value="id") Long id) throws Exception{
 		
 		return service.findById(id);
 	}
 	
-	@GetMapping(produces= {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	@GetMapping(produces= { "application/json", "application/xml", "application/x-yaml" })
 	public List<PersonVO> findAll() {
 		return service.findAll();
 	}
 	
-	@PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, produces= {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	@PostMapping(consumes = { "application/json", "application/xml", "application/x-yaml" }, produces= { "application/json", "application/xml", "application/x-yaml" })
 	public PersonVO create(@RequestBody PersonVO person) throws Exception{
 		
 		return service.create(person);
 	}
 	
-	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(consumes = { "application/json", "application/xml", "application/x-yaml" }, produces= { "application/json", "application/xml", "application/x-yaml" })
 	public PersonVO update(@RequestBody PersonVO person) throws Exception{
 		
 		return service.update(person);
