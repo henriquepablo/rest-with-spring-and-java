@@ -38,10 +38,17 @@ public class PersonServices {
 	}
 
 	public PersonVO create(PersonVO person) {
-
+		
 		logger.info("Create a person");
 		// converte de VO para entidade
-		Person entity = DozerMapper.parseObject(person, Person.class);
+		
+		Person entity = new Person();
+		
+		entity.setFirstName(person.getFirstName());
+		entity.setLastName(person.getLastName());
+		entity.setAddres(person.getAddress());
+		entity.setGender(person.getGender());
+		
 		// cria a entidade no banco
 		repository.save(entity);
 		// converte de entidade para VO
