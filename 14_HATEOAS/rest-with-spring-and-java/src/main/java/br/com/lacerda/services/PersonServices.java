@@ -29,7 +29,18 @@ public class PersonServices {
 
 		logger.info("Find all persons");
 
-		return DozerMapper.parseListObjects(repository.findAll(), PersonVO.class);
+		var persons = DozerMapper.parseListObjects(repository.findAll(), PersonVO.class);
+		
+		persons.stream().forEach(p -> {
+			try {
+				p.add(linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		
+		return persons;
 	}
 
 	public PersonVO findById(Long id) throws Exception {
@@ -44,7 +55,7 @@ public class PersonServices {
 		return vo;
 	}
 
-	public PersonVO create(PersonVO person) {
+	public PersonVO create(PersonVO person) throws Exception {
 		
 		logger.info("Create a person");
 		// converte de VO para entidade
@@ -57,12 +68,13 @@ public class PersonServices {
 		entity.setGender(person.getGender());
 		
 		// cria a entidade no banco
-		repository.save(entity);
+		PersonVO vo = DozerMapper.parseObject(repository.save(entity), PersonVO.class);
 		// converte de entidade para VO
-		return DozerMapper.parseObject(entity, PersonVO.class);
+		vo.add(linkTo(methodOn(PersonController.class).findById(vo.getKey())).withSelfRel());
+		return vo;
 	}
 
-	public PersonVO update(PersonVO person) {
+	public PersonVO update(PersonVO person) throws Exception {
 
 		logger.info("Update a person");
 		
@@ -73,9 +85,10 @@ public class PersonServices {
 		entity.setAddres(person.getAddress());
 		entity.setGender(person.getGender());
 		
-		repository.save(entity);
-		
-		return DozerMapper.parseObject(entity, PersonVO.class);
+		PersonVO vo = DozerMapper.parseObject(repository.save(entity), PersonVO.class);
+		// converte de entidade para VO
+		vo.add(linkTo(methodOn(PersonController.class).findById(vo.getKey())).withSelfRel());
+		return vo;
 	}
 	
 	public void delete(Long id) {
